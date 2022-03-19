@@ -37,6 +37,10 @@ export default new Router({
               component: () => import(/* webpackChunkName: "main-dashboard" */ './views/main/Dashboard.vue'),
             },
             {
+              path: 'graphviz',
+              component: () => import(/* webpackChunkName: "main-graphviz" */ './views/main/Graphviz.vue'),
+            },
+            {
               path: 'profile',
               component: RouterComponent,
               redirect: 'profile/view',
@@ -45,6 +49,11 @@ export default new Router({
                   path: 'view',
                   component: () => import(
                     /* webpackChunkName: "main-profile" */ './views/main/profile/UserProfile.vue'),
+                },
+                {
+                  path: 'graphviz2',
+                  component: () => import(
+                    /* webpackChunkName: "main-profile-graphviz2" */ './views/main/profile/Graphviz2.vue'),
                 },
                 {
                   path: 'edit',

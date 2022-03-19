@@ -12,12 +12,28 @@
               <v-list-tile-title>Dashboard</v-list-tile-title>
             </v-list-tile-content>
           </v-list-tile>
+          <v-list-tile to="/main/graphviz">
+            <v-list-tile-action>
+              <v-icon>insights</v-icon>
+            </v-list-tile-action>
+            <v-list-tile-content>
+              <v-list-tile-title>D3-GraphViz</v-list-tile-title>
+            </v-list-tile-content>
+          </v-list-tile>
           <v-list-tile to="/main/profile/view">
             <v-list-tile-action>
               <v-icon>person</v-icon>
             </v-list-tile-action>
             <v-list-tile-content>
               <v-list-tile-title>Profile</v-list-tile-title>
+            </v-list-tile-content>
+          </v-list-tile>
+          <v-list-tile to="/main/profile/graphviz2">
+            <v-list-tile-action>
+              <v-icon>person</v-icon>
+            </v-list-tile-action>
+            <v-list-tile-content>
+              <v-list-tile-title>D3-Graphviz2</v-list-tile-title>
             </v-list-tile-content>
           </v-list-tile>
           <v-list-tile to="/main/profile/edit">
@@ -125,25 +141,25 @@ import { readDashboardMiniDrawer, readDashboardShowDrawer, readHasAdminAccess } 
 import { commitSetDashboardShowDrawer, commitSetDashboardMiniDrawer } from '@/store/main/mutations';
 import { dispatchUserLogOut } from '@/store/main/actions';
 
-const routeGuardMain = async (to, from, next) => {
-  if (to.path === '/main') {
-    next('/main/dashboard');
-  } else {
-    next();
-  }
-};
+// const routeGuardMain = async (to, from, next) => {
+//   if (to.path === '/main') {
+//     next('/main/dashboard');
+//   } else {
+//     next();
+//   }
+// };
 
 @Component
 export default class Main extends Vue {
   public appName = appName;
 
-  public beforeRouteEnter(to, from, next) {
-    routeGuardMain(to, from, next);
-  }
+  // public beforeRouteEnter(to, from, next) {
+  //   routeGuardMain(to, from, next);
+  // }
 
-  public beforeRouteUpdate(to, from, next) {
-    routeGuardMain(to, from, next);
-  }
+  // public beforeRouteUpdate(to, from, next) {
+  //   routeGuardMain(to, from, next);
+  // }
 
   get miniDrawer() {
     return readDashboardMiniDrawer(this.$store);
