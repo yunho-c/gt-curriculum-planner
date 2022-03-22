@@ -1,5 +1,5 @@
 <template>
-  <div id="graph" style="text-align: center;"/>
+  <div id="graph" style="text-align: center; width: 70%; height: 700px; border: 1px solid black"/>
 </template>
 
 <script>
@@ -10,28 +10,11 @@ import 'd3-graphviz'
 // load webassembly
 let wasm = document.createElement('script')
 wasm.setAttribute('src', 'https://unpkg.com/@hpcc-js/wasm/dist/index.min.js')
-wasm.setAttribute('type', 'application/javascript')
+wasm.setAttribute('type', 'application/javascript') // it works but I don't know why..
 document.head.appendChild(wasm)
 
 
-// d3-graphviz utils
-function attributer(datum) { // deleted arguments (lint complaint) index, nodes
-    var selection = d3.select(this);
-    if (datum.tag == "svg") {
-        var width = window.innerWidth;
-        var height = window.innerHeight;
-        var x = 200;
-        var y = 10
-        var scale = 0.75;
-        selection
-            .attr("width", width + "pt")
-            .attr("height", height + "pt")
-            .attr("viewBox", -x + " " + -y + " " + (width / scale) + " " + (height / scale));
-        datum.attributes.width = width + "pt";
-        datum.attributes.height = height + "pt";
-        datum.attributes.viewBox = -x + " " + -y + " " + (width / scale) + " " + (height / scale);
-    }
-}
+
 
 function transitionFactory() {
     return d3.transition("main")
@@ -39,42 +22,61 @@ function transitionFactory() {
         .duration(1000);
 }
 
-// function interactive() {
+function responsivefy(svg) {
+    // get container + svg aspect ratio
+    var container = d3.select(svg.node().parentNode),
+        width = parseInt(svg.style("width")),
+        height = parseInt(svg.style("height")),
+        aspect = width / height;
 
-//     nodes = d3.selectAll('.node,.edge');
-//     nodes
-//         .on("click", function () {
-//             var title = d3.select(this).selectAll('title').text().trim();
-//             var text = d3.select(this).selectAll('text').text();
-//             var id = d3.select(this).attr('id');
-//             var class1 = d3.select(this).attr('class');
-//             dotElement = title.replace('->',' -> ');
-//             console.log('Element id="%s" class="%s" title="%s" text="%s" dotElement="%s"', id, class1, title, text, dotElement);
-//             console.log('Finding and deleting references to %s "%s" from the DOT source', class1, dotElement);
-//             for (i = 0; i < dotSrcLines.length;) {
-//                 if (dotSrcLines[i].indexOf(dotElement) >= 0) {
-//                     console.log('Deleting line %d: %s', i, dotSrcLines[i]);
-//                     dotSrcLines.splice(i, 1);
-//                 } else {
-//                     i++;
-//                 }
-//             }
-//             dotSrc = dotSrcLines.join('\n');
-//             render();
-//         });
-// }
+    // add viewBox and preserveAspectRatio properties,
+    // and call resize so that svg resizes on inital page load
+    svg.attr("viewBox", "0 0 " + width + " " + height)
+        .attr("perserveAspectRatio", "xMinYMid")
+        .call(resize);
+
+    // to register multiple listeners for same event type, 
+    // you need to add namespace, i.e., 'click.foo'
+    // necessary if you call invoke this function for multiple svgs
+    // api docs: https://github.com/mbostock/d3/wiki/Selections#on
+    d3.select(window).on("resize." + container.attr("id"), resize);
+
+    // get width of container and resize svg to fit it
+    function resize() {
+        var targetWidth = parseInt(container.style("width"));
+        svg.attr("width", targetWidth);
+        svg.attr("height", Math.round(targetWidth / aspect));
+    }
+}
+console.log(responsivefy)
 
 
 export default {
   methods: {
     // call after vue loads (i.e. mounted())
     attach_graphviz() {
+      const graphContainer = d3.select("#graph");
+      const width = graphContainer.node().clientWidth;
+      const height = graphContainer.node().clientHeight;
+      console.log(width, height)
+      
       this.g = d3.select("#graph").graphviz()
-      // .logEvents(true)
-      .transition(transitionFactory)
-      .tweenShapes(false)
-      .attributer(attributer);
-      // .on("initEnd", render)
+        // .logEvents(true)
+        .transition(transitionFactory)
+        .tweenShapes(false)
+        // .attributer(attributer)
+        // .on("initEnd", render)
+        .scale(1)
+        .width(width)
+        .height(height)
+        .fit(true)
+        .zoom(false)
+      console.log(d3.select('#graph').attr('viewbox'))
+      // d3.select('#graph').append("svg")
+        // .attr("width", 960)
+      //   .attr("height", 500)
+      //   .attr('viewbox', `0 0 300 600`)
+      //   .call(responsivefy)
     },
 
     draw(dot) {
@@ -96,18 +98,18 @@ export default {
           // console.log(ellipse)
 
           // inspect
-          console.log(this)
-          console.log(node)
-          console.log(ellipse)
+          // console.log(this)
+          // console.log(node)
+          // console.log(ellipse)
 
           // if baseRx doesn't exist, create it. 
           if (node.attr('baseRx') == null) {
             node.attr('baseRx', ellipse.attr('rx'))
-            console.log('baseRx set!')
+            // console.log('baseRx set!')
           }
           // set rx to 1.2*bRx.
           const baseRx = node.attr('baseRx')
-          console.log(baseRx)
+          // console.log(baseRx)
           ellipse
             .transition()
             .duration('200')
@@ -135,12 +137,38 @@ export default {
         })
       this.nodes
         .on('click', function() {
-            d3.select(this).transition()
-            .duration('300')
-            .attr('style', 'font-weight: bold')
-            console.log(this)
-            console.log(d3.select(this))
-        })
+          // create a 'clicked' attribute
+          // console.log(this)
+          const node = d3.select(this)
+          const ellipse = d3.select(this).selectChild('ellipse')
+
+          if (ellipse.attr('baseColor') == null) {
+            ellipse.attr('baseColor', ellipse.attr('fill'))
+            console.log('baseColor set!', ellipse.attr('baseColor'))
+          }
+
+          if (node.attr('clicked') == null || node.attr('clicked') == 'false') {
+            node.attr('clicked', true)
+            console.log('invoked')
+          }
+          else {
+            node.attr('clicked', false)
+          }
+
+          if (node.attr('clicked') == 'true') {
+            ellipse.transition().duration('200').attr('fill', '#0d8201')
+          }
+          else {
+            ellipse.transition().duration('200').attr('fill', ellipse.attr('baseColor'))
+          }
+
+          d3.select(this).transition()
+          .duration('300')
+          .attr('style', 'font-weight: bold')
+          console.log(this)
+          console.log(d3.select(this))
+        }
+      )
     }
   },
 
