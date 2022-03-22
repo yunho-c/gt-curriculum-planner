@@ -6,6 +6,9 @@ from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
 
+from data import default_curriculums
+from fastapi.responses import JSONResponse
+
 
 class Item(BaseModel):
     name: str
@@ -40,9 +43,21 @@ def read_root():
     return {"Hello": "World"}
 
 @app.get("/graph/{item_id}")
-def read_item(item_id: int, q: Optional[str] = None):
+def read_examples(item_id: int, q: Optional[str] = None):
     # return {"item_id": item_id, "q": q}
     return {"item_id": dots[item_id]}
+
+@app.get("/graph/{item_id}")
+def get_graph(item_id: int, q: Optional[str] = None):
+    # draw_scheme
+    # extract dot lines from graphviz obj
+    # maybe to_str
+    # or look into file-writing source code (by exploring filename argument)
+    return
+
+@app.get("/curr/{major}")
+def get_curr(major: str):
+    return JSONResponse(default_curriculums[major])
 
 @app.put("/items/{item_id}")
 def update_item(item_id: int, item: Item):

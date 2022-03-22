@@ -15,7 +15,8 @@
     "d3-graphviz": "4.1.0",
     "vue": "^3.2.13",
     "vue-axios": "^3.4.1",
-    "vue-router": "^4.0.14"
+    "vue-router": "^4.0.14",
+    "vue-select": "^4.0.0-beta.3"
   },
   "devDependencies": {
     "@babel/core": "^7.12.16",
