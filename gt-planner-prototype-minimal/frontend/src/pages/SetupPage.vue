@@ -9,7 +9,12 @@
     Completed:
     <div v-for="(content, course) in curr" :key="course.id">
       <label>{{ course }}</label>
-      <input type="checkbox" v-model="content.done" :value="course" />
+      <input
+        type="checkbox"
+        v-model="content.done"
+        :value="course"
+        @change="onCheckBoxClick"
+      />
     </div>
   </div>
 </template>
@@ -50,6 +55,13 @@ export default {
         this.curr = response.data;
         localStorage.setItem("courses", JSON.stringify(this.curr));
       });
+    },
+    onCheckBoxClick(event) {
+      const checked = event.target.checked;
+
+      let courses = JSON.parse(localStorage.getItem("courses"));
+
+      if (checked) return;
     },
   },
   components: {

@@ -138,7 +138,16 @@ export default {
         // create a 'clicked' attribute
         const node = d3.select(this);
         const ellipse = d3.select(this).selectChild("ellipse");
-        console.log(this.textContent);
+        let courseName = this.textContent.split("\n")[1];
+        let courses = JSON.parse(localStorage.getItem("courses"));
+
+        const done = courses[courseName].done;
+        if (done) {
+          courses[courseName] = false;
+        } else {
+          courses[courseName] = true;
+        }
+        localStorage.setItem("courses", JSON.stringify(courses));
 
         if (ellipse.attr("baseColor") == null) {
           ellipse.attr("baseColor", ellipse.attr("fill"));
