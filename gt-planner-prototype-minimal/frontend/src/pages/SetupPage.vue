@@ -1,56 +1,52 @@
 <template>
   <div>
     <div>
-      <v-select :options="majors" placeholder="Major"/>
+      <v-select :options="majors" placeholder="Major" />
       <button @click="fetch_curr">Fetch Curriculum</button>
     </div>
     <!-- checkbox for debug -->
-    <br>
+    <br />
     Completed:
     <div v-for="(content, course) in curr" :key="course.id">
-      <label>{{course}}</label>
-      <input type="checkbox" v-model="content.done" :value="course"/>
+      <label>{{ course }}</label>
+      <input type="checkbox" v-model="content.done" :value="course" />
     </div>
   </div>
 </template>
 
 <script>
-import vSelect from 'vue-select'
-import 'vue-select/dist/vue-select.css'
+import vSelect from "vue-select";
+import "vue-select/dist/vue-select.css";
 
 export default {
-  name: 'SetupPage',
+  name: "SetupPage",
   data() {
     return {
-      a: 'b',
-      b: 'd',
+      a: "b",
+      b: "d",
       majors: [
         {
           id: 0,
-          label: 'ME'
+          label: "ME",
         },
         {
           id: 1,
-          label: 'BME'
+          label: "BME",
         },
       ],
-      curr: false
-    }
+      curr: false,
+    };
   },
   methods: {
     fetch_curr() {
-      this.axios.get('http://localhost:8000/curr/ME').then((response) => {
-        this.curr = response.data
-        // console.log(response.data)
-        // console.log(response)
-      })
+      this.axios.get("http://localhost:8000/curr/ME").then((response) => {
+        this.curr = response.data;
+      });
     },
   },
   components: {
-    vSelect
+    vSelect,
   },
-  mounted() {
-    // this.fetch_curr()
-  }
-}
+  mounted() {},
+};
 </script>
