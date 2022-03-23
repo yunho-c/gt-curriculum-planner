@@ -1,20 +1,19 @@
 <template>
-  <h1>GT-Planner Prototype Minimal</h1>
+  <div>
+    <h1>GT-Planner Prototype Minimal</h1>
     <p>
-    <router-link to="/setup">Setup</router-link>
-    <router-link to="/">Main</router-link>
-  </p>
-  <router-view/>
-  <!-- <button @click="fetch_graph">fetch_graph</button> -->
-
-
+      <router-link to="/setup">Setup</router-link>
+      <router-link to="/">Main</router-link>
+    </p>
+    <router-view />
+    <!-- <button @click="fetch_graph">fetch_graph</button> -->
+  </div>
 </template>
 
 <script>
-
 export default {
-  name: 'App',
-}
+  name: "App",
+};
 </script>
 
 <style>

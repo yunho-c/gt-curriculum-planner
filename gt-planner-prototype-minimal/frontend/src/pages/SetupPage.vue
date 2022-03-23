@@ -39,8 +39,15 @@ export default {
   },
   methods: {
     fetch_curr() {
+      let courses = JSON.parse(localStorage.getItem("courses"));
+      if (courses != null) {
+        this.curr = courses;
+        return;
+      }
+
       this.axios.get("http://localhost:8000/curr/ME").then((response) => {
         this.curr = response.data;
+        localStorage.setItem("courses", JSON.stringify(this.curr));
       });
     },
   },
