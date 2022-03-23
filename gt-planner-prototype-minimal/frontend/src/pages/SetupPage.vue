@@ -38,6 +38,7 @@ export default {
     };
   },
   methods: {
+    // make this actualy work (specify a major)
     fetch_curr() {
       let courses = JSON.parse(localStorage.getItem("courses"));
       if (courses != null) {

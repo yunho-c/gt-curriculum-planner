@@ -10,6 +10,7 @@ from data import default_curriculums
 from fastapi.responses import JSONResponse
 
 
+
 class Item(BaseModel):
     name: str
     price: float
