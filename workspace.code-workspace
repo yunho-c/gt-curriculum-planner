@@ -1,0 +1,14 @@
+{
+	"folders": [
+		{
+			"path": "."
+		},
+		{
+			"path": "gt-planner-prototype-minimal/frontend"
+		},
+		{
+			"path": "gt-planner-prototype-minimal/backend"
+		}
+	],
+	"settings": {}
+}
