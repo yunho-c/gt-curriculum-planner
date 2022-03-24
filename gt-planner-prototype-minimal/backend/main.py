@@ -3,12 +3,13 @@ from typing import Optional
 from fastapi import FastAPI
 from pydantic import BaseModel
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi import Request
 
 app = FastAPI()
 
 from data import default_curriculums
 from fastapi.responses import JSONResponse
-
+from graphing import get_dot_source
 
 
 class Item(BaseModel):
@@ -43,18 +44,20 @@ app.add_middleware(
 def read_root():
     return {"Hello": "World"}
 
-@app.get("/graph/{item_id}")
-def read_examples(item_id: int, q: Optional[str] = None):
+@app.get("/example_graph/{item_id}")
+def read_examples(item_id: int):
     # return {"item_id": item_id, "q": q}
     return {"item_id": dots[item_id]}
 
-@app.get("/graph/{item_id}")
-def get_graph(item_id: int, q: Optional[str] = None):
-    # draw_scheme
-    # extract dot lines from graphviz obj
-    # maybe to_str
-    # or look into file-writing source code (by exploring filename argument)
-    return
+class Curriculum(BaseModel):
+    curr: dict
+
+@app.post("/graph")
+def get_graph(curr: Curriculum): # if I add optional, then I add another level. # how to get json argument in fastapi?
+    # curr = req_curr.json()
+    curr_ = curr.curr
+    print(curr_)
+    return JSONResponse(get_dot_source(curr_))
 
 @app.get("/curr/{major}")
 def get_curr(major: str):
