@@ -49,10 +49,15 @@ def read_examples(item_id: int):
     # return {"item_id": item_id, "q": q}
     return {"item_id": dots[item_id]}
 
-@app.get("/graph")
-def get_graph(req_curr: Request, theme: Optional[dict] = None): # how to get json argument in fastapi?
-    curr = req_curr.json()
-    return JSONResponse(get_dot_source(curr))
+class Curriculum(BaseModel):
+    curr: dict
+
+@app.post("/graph")
+def get_graph(curr: Curriculum): # if I add optional, then I add another level. # how to get json argument in fastapi?
+    # curr = req_curr.json()
+    curr_ = curr.curr
+    print(curr_)
+    return JSONResponse(get_dot_source(curr_))
 
 @app.get("/curr/{major}")
 def get_curr(major: str):
