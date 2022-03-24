@@ -1,5 +1,5 @@
 digraph Curriculum {
-	node [color=black fontsize=12 penwidth=1.5 shape=box style="rounded, filled"]
+	node [color=black fontcolor=white fontsize=12 penwidth=1.5 shape=box style="rounded, filled"]
 	edge [arrowsize=0.65 penwidth=3]
 	rankdir=LR
 	"CHEM 1310" [fillcolor="#606000"]

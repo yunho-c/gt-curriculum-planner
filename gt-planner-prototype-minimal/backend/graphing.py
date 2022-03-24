@@ -61,7 +61,9 @@ black_white_yellow_palette = {
                      'normal_edge'   : '#a0a0a0'}
 
 class black_white_yellow(Theme):
-    def __init__(self, palette): self.palette = palette
+    def __init__(self, palette): 
+        self.palette = palette
+        self.node_attributes = {'fontcolor': 'white'}
 
     # instead of making border the same color as fill, let's rather make it possible to `node_attr` using theme class
     def border(self, course, immediacy, completed, capstone): self.node(course, immediacy, completed, capstone)
@@ -71,6 +73,12 @@ class black_white_yellow(Theme):
         elif immediacy == 0: return str(self.palette['immediate_node'])
         elif capstone: return str(self.palette['capstone_node'])
         else: return str(self.palette['normal_node'])
+
+    # 슈발 이것도 draw가 쓰게 시키려면 또 복잡해지네... 어케 해야 하는겨 ㅠ,ㅠ
+    def fontcolor(self, course=None, immediacy=0, completed=False, capstone=False):
+        # really just depends on nodecolor
+        if completed or immediacy == 0: return 'black'
+        else: return 'white'
 
     def edge(self, course=None, immediacy=0, completed=False): 
         if completed: return str(self.palette['completed_node']) # darken a bit
@@ -90,8 +98,7 @@ def draw(curriculum, theme):
     # TODO: implement border colors
     # TODO: add borders to edge
     #     not sure if possible
-    # gonna be a good idea to implement colorscheme darkmode (border only)! capstone becomes filled.
-    
+
     # GRAPH
     c = graphviz.Digraph('Curriculum') # format='jpg' # filename='process.gv'
     c.attr(rankdir='LR') # make this horizontal. (important)
@@ -104,7 +111,10 @@ def draw(curriculum, theme):
     c.node_attr['penwidth'] = '1.5'
     # font
     c.node_attr['fontsize'] = '12'
-
+    # theme attributes
+    if theme.node_attributes: 
+        for key, value in theme.node_attributes.items():
+            c.node_attr[key] = value
 
     # edge defaults
     c.edge_attr['arrowsize'] = '0.65'
@@ -150,20 +160,19 @@ def return_str(graph):
     return str(graph)
 
 
-def get_dot(curr):
-    # Drawing Workflow
-
+# Drawing Workflow
+def get_dot_source(curr):
     # process immediacy
     update_immediacies(curr)
+
     # draw graph
     c = draw(curr, bwy)
+
     # return as string
-    c.render()
     return str(c)
 
 
-from data import default_curriculums
-test_curr = default_curriculums['ME']
-
-get_dot(test_curr)
-
+if __name__ == "__main__":
+    from data import default_curriculums
+    test_curr = default_curriculums['ME']
+    print(get_dot_source(test_curr))
