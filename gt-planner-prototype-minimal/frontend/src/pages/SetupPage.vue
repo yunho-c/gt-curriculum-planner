@@ -2,7 +2,6 @@
   <div>
     <div>
       <v-select :options="majors" placeholder="Major" />
-      <button @click="fetch_curr">Fetch Curriculum</button>
     </div>
     <!-- checkbox for debug -->
     <br />
@@ -67,6 +66,8 @@ export default {
   components: {
     vSelect,
   },
-  mounted() {},
+  mounted() {
+    this.fetch_curr();
+  },
 };
 </script>
