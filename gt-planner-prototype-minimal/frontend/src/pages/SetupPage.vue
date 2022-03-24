@@ -59,7 +59,7 @@ export default {
     onCheckBoxClick(event) {
       const checked = event.target.checked;
 
-      let courses = JSON.parse(localStorage.getItem("courses"));
+      //   let courses = JSON.parse(localStorage.getItem("courses"));
 
       if (checked) return;
     },

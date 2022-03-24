@@ -139,13 +139,17 @@ export default {
         const node = d3.select(this);
         const ellipse = d3.select(this).selectChild("ellipse");
         let courseName = this.textContent.split("\n")[1];
+        console.log("courseName: " + courseName);
         let courses = JSON.parse(localStorage.getItem("courses"));
+        console.log("courses: " + JSON.stringify(courses));
+        console.log(courses[courseName].done);
+        // console.log(courses[courseName].done);
 
         const done = courses[courseName].done;
         if (done) {
-          courses[courseName] = false;
+          courses[courseName].done = false;
         } else {
-          courses[courseName] = true;
+          courses[courseName].done = true;
         }
         localStorage.setItem("courses", JSON.stringify(courses));
 
