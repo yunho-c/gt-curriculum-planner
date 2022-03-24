@@ -12,6 +12,7 @@ from fastapi.responses import JSONResponse
 from graphing import get_dot_source
 
 
+
 class Item(BaseModel):
     name: str
     price: float

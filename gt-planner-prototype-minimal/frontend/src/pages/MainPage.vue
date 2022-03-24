@@ -1,12 +1,12 @@
 <template>
-  <div>
-    <button @click="$refs.canvas.draw(d1)">1</button>
-    <button @click="$refs.canvas.draw(d2)">2</button>
-    <button @click="$refs.canvas.draw(d3)">3</button>
-    <button @click="$refs.canvas.draw(d4)">4</button>
-    <button>Optimize</button>
-    <graph-div ref="canvas" />
-  </div>
+  <button @click="fetch_example_graphs">Fetch Example graphs</button>
+  <button @click="$refs.asdf.draw(ex_graph1)">1</button>
+  <button @click="$refs.asdf.draw(ex_graph2)">2</button>
+  <button @click="$refs.asdf.draw(ex_graph3)">3</button>
+  <button @click="$refs.asdf.draw(ex_graph4)">4</button>
+  <button>Optimize</button>
+  <graph-div ref='asdf'/>
+
 </template>
 
 <script>
@@ -16,11 +16,11 @@ export default {
   name: "MainPage",
   data() {
     return {
-      d1: "digraph {a}",
-      d2: "digraph {a -> b}",
-      d3: "digraph {a -> b -> c}",
-      d4: "digraph {a -> b -> c -> d}",
-    };
+      ex_graph1: 'digraph {a}',
+      ex_graph2: 'digraph {a -> b}',
+      ex_graph3: 'digraph {a -> b -> c}',
+      ex_graph4: 'digraph {a -> b -> c -> d}',
+    }
   },
   methods: {
     fetch_example_graphs() {
