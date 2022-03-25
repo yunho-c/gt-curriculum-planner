@@ -100,19 +100,19 @@ export default {
       // let's create a custom attribute storing original rx and ry.
       this.nodes
         .on("mouseover", function () {
-          // attempt to select the ellipse (to access geometry variables)
+          // attempt to select the path (to access geometry variables)
           const node = d3.select(this);
-          const ellipse = d3.select(this).selectChild("ellipse");
+          const path = d3.select(this).selectChild("path");
 
           // if baseRx doesn't exist, create it.
           if (node.attr("baseRx") == null) {
-            node.attr("baseRx", ellipse.attr("rx"));
+            node.attr("baseRx", path.attr("rx"));
             // console.log('baseRx set!')
           }
           // set rx to 1.2*bRx.
           const baseRx = node.attr("baseRx");
           // console.log(baseRx)
-          ellipse
+          path
             .transition()
             .duration("200")
             .attr("rx", baseRx * 1.2);
@@ -124,11 +124,11 @@ export default {
         })
         .on("mouseout", function () {
           const node = d3.select(this);
-          const ellipse = d3.select(this).selectChild("ellipse");
+          const path = d3.select(this).selectChild("path");
 
           // set rx to bRx.
           const baseRx = node.attr("baseRx");
-          ellipse.transition().duration("200").attr("rx", baseRx);
+          path.transition().duration("200").attr("rx", baseRx);
 
           // node.transition()
           //   .duration('300')
@@ -137,7 +137,7 @@ export default {
       this.nodes.on("click", function () {
         // create a 'clicked' attribute
         const node = d3.select(this);
-        const ellipse = d3.select(this).selectChild("ellipse");
+        const path = d3.select(this).selectChild("path");
         let courseName = this.textContent.split("\n")[1];
         let courses = JSON.parse(localStorage.getItem("courses"));
 
@@ -149,8 +149,8 @@ export default {
         }
         localStorage.setItem("courses", JSON.stringify(courses));
 
-        if (ellipse.attr("baseColor") == null) {
-          ellipse.attr("baseColor", ellipse.attr("fill"));
+        if (path.attr("baseColor") == null) {
+          path.attr("baseColor", path.attr("fill"));
         }
 
         if (node.attr("clicked") == null || node.attr("clicked") == "false") {
@@ -160,12 +160,12 @@ export default {
         }
 
         if (node.attr("clicked") == "true") {
-          ellipse.transition().duration("200").attr("fill", "#0d8201");
+          path.transition().duration("200").attr("fill", "#0d8201");
         } else {
-          ellipse
+          path
             .transition()
             .duration("200")
-            .attr("fill", ellipse.attr("baseColor"));
+            .attr("fill", path.attr("baseColor"));
         }
 
         d3.select(this)
