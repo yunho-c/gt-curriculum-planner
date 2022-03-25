@@ -1,4 +1,4 @@
-{
+{ "curr": {
     "CHEM 1310": {"prqs": [], "year": 1, "done": false, "immediacy": 0},
     "MATH 1551": {"prqs": [], "year": 1, "done": false, "immediacy": 0},
     "MATH 1553": {"prqs": [], "year": 1, "done": false, "immediacy": 0},
@@ -38,4 +38,4 @@
     "ME Elective": {"prqs": [], "year": null, "done": false, "immediacy": 0},
     "Humanities Elective": {"prqs": [],"year": null,"done": false,"immediacy": 0},
     "Ethics Overlay": {"prqs": [], "year": null, "done": false, "immediacy": 0}
-}
+}}
