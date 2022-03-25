@@ -24,17 +24,17 @@ export default {
   },
   methods: {
     fetch_example_graphs() {
-      this.axios.get("http://localhost:8000/graph/0").then((response) => {
-        this.d1 = response.data.item_id;
+      this.axios.get("http://localhost:8000/example_graph/0").then((response) => {
+        this.ex_graph1 = response.data.item_id;
       });
-      this.axios.get("http://localhost:8000/graph/1").then((response) => {
-        this.d2 = response.data.item_id;
+      this.axios.get("http://localhost:8000/example_graph/1").then((response) => {
+        this.ex_graph2 = response.data.item_id;
       });
-      this.axios.get("http://localhost:8000/graph/2").then((response) => {
-        this.d3 = response.data.item_id;
+      this.axios.get("http://localhost:8000/example_graph/2").then((response) => {
+        this.ex_graph3 = response.data.item_id;
       });
-      this.axios.get("http://localhost:8000/graph/3").then((response) => {
-        this.d4 = response.data.item_id;
+      this.axios.get("http://localhost:8000/example_graph/3").then((response) => {
+        this.ex_graph4 = response.data.item_id;
       });
     },
   },
