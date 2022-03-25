@@ -54,11 +54,11 @@ class Curriculum(BaseModel):
     curr: dict
 
 @app.post("/graph")
-def get_graph(curr: Curriculum): # if I add optional, then I add another level. # how to get json argument in fastapi?
+def graph(curr: Curriculum): # if I add optional, then I add another level. # how to get json argument in fastapi?
     # curr = req_curr.json()
     curr_ = curr.curr
     print(curr_)
-    return JSONResponse(get_dot_source(curr_))
+    return get_dot_source(curr_)
 
 @app.get("/curr/{major}")
 def get_curr(major: str):

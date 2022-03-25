@@ -65,7 +65,6 @@ export default {
       const graphContainer = d3.select("#graph");
       const width = graphContainer.node().clientWidth;
       const height = graphContainer.node().clientHeight;
-      console.log(width, height);
 
       this.g = d3
         .select("#graph")
@@ -80,7 +79,8 @@ export default {
         .height(height)
         .fit(true)
         .zoom(false);
-      console.log(d3.select("#graph").attr("viewbox"));
+        // .attr("font-family", function(d,i) {return i<5 ? "Arvo" : "Sancreek"; })
+      // console.log(d3.select("#graph").attr("viewbox"));
       // d3.select('#graph').append("svg")
       // .attr("width", 960)
       //   .attr("height", 500)
@@ -168,10 +168,10 @@ export default {
             .attr("fill", path.attr("baseColor"));
         }
 
-        d3.select(this)
-          .transition()
-          .duration("300")
-          .attr("style", "font-weight: bold");
+        // d3.select(this)
+        //   .transition()
+        //   .duration("300")
+        //   .attr("style", "font-weight: bold");
       });
     },
   },

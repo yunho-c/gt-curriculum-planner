@@ -1,7 +1,8 @@
 <template>
   <div>
     <div>
-      <v-select :options="majors" placeholder="Major" />
+      <v-select :options="majors" v-model="selected_major" placeholder="Major" />
+      <button @click="load_curr">Reset Curriculum</button>
     </div>
     <!-- checkbox for debug -->
     <br />
@@ -26,8 +27,7 @@ export default {
   name: "SetupPage",
   data() {
     return {
-      a: "b",
-      b: "d",
+      selected_major: null,
       majors: [
         {
           id: 0,
@@ -36,6 +36,10 @@ export default {
         {
           id: 1,
           label: "BME",
+        },
+        {
+          id: 2,
+          label: "CS",
         },
       ],
       curr: false,
@@ -47,17 +51,21 @@ export default {
       let courses = JSON.parse(localStorage.getItem("courses"));
       if (courses != null) {
         this.curr = courses;
-        return;
       }
+      else { 
+        this.load_curr()
+      }
+    },
+    load_curr() {
+      console.log(this.selected_major)
 
-      this.axios.get("http://localhost:8000/curr/ME").then((response) => {
+      this.axios.get("http://localhost:8000/curr/"+this.selected_major.label).then((response) => {
         this.curr = response.data;
         localStorage.setItem("courses", JSON.stringify(this.curr));
       });
     },
     onCheckBoxClick(event) {
       const checked = event.target.checked;
-
       //   let courses = JSON.parse(localStorage.getItem("courses"));
 
       if (checked) return;

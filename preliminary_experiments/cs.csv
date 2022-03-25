@@ -1,0 +1,24 @@
+course name,explicit pre-requisites,credit hours,recommended year
+Wellness,,2,1
+ENGL 1101,,3,1
+ENGL 1102,ENGL 1101,3,1
+MATH 1552,,4,1
+CS 1301,,3,1
+Humanities,,3,2
+PHYS 2211,,4,1
+Lab Science,,4,2
+MATH 1551,,2,1
+MATH 1554,MATH 1552,4,2
+History,,3,1
+Social Science,,3,1
+PSYC 1101,,3,2
+CS 1100,,1,1
+CS 2050,,3,2
+CS 1331,CS 1301,3,1
+CS 1332,CS 1331,3,2
+MATH 2550,MATH 1552,2,2
+CS 2340,CS 1331,3,2
+Ethics,,3,4
+MATH 3012,MATH 1554,3,3
+Statistics,MATH 1551,3,3
+Free Elective,,3,4
