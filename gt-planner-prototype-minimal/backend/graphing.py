@@ -54,8 +54,9 @@ class Theme:
     def edge(self, course, immediacy, completed): pass
 
 black_white_yellow_palette = {
+                     'border'        : '#888888',
                      'completed_node': '#008000', 
-                     'immediate_node': '#606000', 
+                     'immediate_node': '#FEE715', 
                      'normal_node'   : '#000000', 
                      'capstone_node' : '#600060', 
                      'normal_edge'   : '#a0a0a0'}
@@ -66,7 +67,10 @@ class black_white_yellow(Theme):
         self.node_attributes = {'fontcolor': 'white'}
 
     # instead of making border the same color as fill, let's rather make it possible to `node_attr` using theme class
-    def border(self, course, immediacy, completed, capstone): self.node(course, immediacy, completed, capstone)
+    def border(self, course=None, immediacy=0, completed=False, capstone=False):
+        if immediacy == 0: return str(self.palette['immediate_node'])
+        else: return str(self.palette['border'])
+
 
     def node(self, course=None, immediacy=0, completed=False, capstone=False): 
         if completed: return str(self.palette['completed_node']) # not sure if this is even needed.
@@ -75,9 +79,10 @@ class black_white_yellow(Theme):
         else: return str(self.palette['normal_node'])
 
     # 슈발 이것도 draw가 쓰게 시키려면 또 복잡해지네... 어케 해야 하는겨 ㅠ,ㅠ
+    # 콜백? 그냥 identifier keyword만 주고 ('immediate', 'capstone', 이렇게?)
     def fontcolor(self, course=None, immediacy=0, completed=False, capstone=False):
         # really just depends on nodecolor
-        if completed or immediacy == 0: return 'black'
+        if completed or immediacy == 0: return '#000000'
         else: return 'white'
 
     def edge(self, course=None, immediacy=0, completed=False): 
@@ -102,13 +107,14 @@ def draw(curriculum, theme):
     # GRAPH
     c = graphviz.Digraph('Curriculum') # format='jpg' # filename='process.gv'
     c.attr(rankdir='LR') # make this horizontal. (important)
+    c.attr(bgcolor='transparent')
 
     # node defaults
     c.node_attr['shape'] = 'box'
     c.node_attr['style'] = 'rounded, filled'
     # border
     c.node_attr['color'] = 'black'
-    c.node_attr['penwidth'] = '1.5'
+    c.node_attr['penwidth'] = '0.5'
     # font
     c.node_attr['fontname'] = 'Roboto Serif'
     c.node_attr['fontsize'] = '10'
@@ -119,7 +125,7 @@ def draw(curriculum, theme):
 
     # edge defaults
     c.edge_attr['arrowsize'] = '0.65'
-    c.edge_attr['penwidth'] = '3'
+    c.edge_attr['penwidth'] = '1.5'
 
     # DRAWING
 
@@ -132,7 +138,7 @@ def draw(curriculum, theme):
         if done: continue
 
         # make the node!
-        c.node(course, fillcolor=theme.node(course, imme, done))
+        c.node(course, fillcolor=theme.node(course, imme, done), color=theme.border(course, imme, done), fontcolor=theme.fontcolor(course, imme))
 
         # introductory (i.e., no pre-req)
         if not prqs: continue

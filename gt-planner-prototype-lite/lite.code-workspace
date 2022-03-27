@@ -2,6 +2,12 @@
 	"folders": [
 		{
 			"path": ".."
+		},
+		{
+			"path": "."
+		},
+		{
+			"path": "../gt-planner-prototype-minimal/backend"
 		}
 	],
 	"settings": {
