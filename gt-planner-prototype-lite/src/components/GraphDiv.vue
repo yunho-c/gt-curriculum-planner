@@ -66,13 +66,13 @@ export default {
         // .on('renderEnd', this.draw('digraph {a -> b}'))
     },
     draw(dot) {
-      this.g.renderDot(dot)
+      // this.g.renderDot(dot)
       // const t = d3.transition('main').duration(750)
       // console.log(t)
       // this.g.transition(d3.transition()).renderDot(dot)
-      this.g.transition(this.transitionFactory)
+      // this.g.transition(this.transitionFactory)
       // console.log(this.g)
-      // this.g.renderDot(dot).on('renderEnd', this.interactive)
+      this.g.renderDot(dot).on('renderEnd', this.interactive)
       // console.log(this.g)
       // this.g.transition(this.transitionFactory).renderDot(dot) // .on('renderEnd', this.interactive)
     },

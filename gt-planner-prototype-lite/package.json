@@ -11,7 +11,6 @@
   },
   "dependencies": {
     "@hpcc-js/wasm": "1.13.0",
-    "@types/vue-select": "^3.16.0",
     "@vueuse/core": "^8.1.1",
     "axios": "^0.26.1",
     "chroma-js": "^2.4.2",
@@ -22,11 +21,10 @@
     "simplex-noise": "^3.0.1",
     "three": "0.134",
     "troisjs": "^0.3.4",
-    "v-select": "^0.0.1",
     "vue": "^3.2.31",
     "vue-axios": "^3.4.1",
     "vue-router": "^4.0.14",
-    "vue-select": "^3.18.3"
+    "vue-select": "^4.0.0-beta.3"
   },
   "devDependencies": {
     "@antfu/eslint-config": "^0.18.8",
