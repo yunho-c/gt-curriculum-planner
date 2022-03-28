@@ -32,7 +32,7 @@ d3 = f3.read()
 d4 = f4.read()
 dots = [d1, d2, d3, d4]
 
-origins = ['http://localhost:8080', 'http://localhost:4000']
+origins = ['http://localhost:8080', 'http://localhost:4000', 'http://localhost:3000']
 app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,

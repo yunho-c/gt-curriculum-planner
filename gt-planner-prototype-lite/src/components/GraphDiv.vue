@@ -14,12 +14,8 @@
 <script lang="ts">
 import * as d3 from 'd3'
 import * as d3Graphviz from 'd3-graphviz'
-// d3-graphviz
-// import * as d3 from 'd3'
-// console.log(d3)
-// import * as d3graphviz from 'd3-graphviz'
-// import { graphviz } from 'd3-graphviz'
 // import 'd3-graphviz'
+
 
 // load webassembly
 const wasm = document.createElement('script')
@@ -27,8 +23,11 @@ wasm.setAttribute('src', 'https://unpkg.com/@hpcc-js/wasm/dist/index.min.js')
 wasm.setAttribute('type', 'application/javascript') // it works but I don't know why..
 document.head.appendChild(wasm)
 
+function transitionFactory2() {
+  return d3.transition('main').delay(130).duration(1000)
+}
+
 export default {
-  inject: ['d3', 'd3Graphviz'],
   data() {
     return {
       curr: null,
@@ -39,9 +38,8 @@ export default {
   },
   methods: {
     transitionFactory() {
-      return d3.transition('main').delay(130).duration(1000)
+      return d3.transition("main").delay(130).duration(1000)
     },
-    // call after vue loads (i.e. mounted())
     attach_graphviz() {
       const graphContainer = d3.select('#graph')
       // // console.log(graphContainer)
@@ -49,57 +47,55 @@ export default {
       const width = graphContainer.node().clientWidth
       const height = graphContainer.node().clientHeight
 
+      // console.log(d3.select('#graph').graphviz().graphvizVersion())
+
+      console.log(this.transitionFactory)
+
+      // this.g = d3.select('#graph').graphviz()
       this.g = d3Graphviz.graphviz('#graph')
       // this.g = graphviz('#graph')
         .logEvents(true)
-        .transition(this.transitionFactory)
-        .tweenShapes(false)
-        // .attributer(attributer)
-        // .on("initEnd", render)
-        .scale(1)
-        .width(width)
-        .height(height)
+        .transition(this.transitionFactory) // .tweenShapes(false)
+        .width(width).height(height)
         .fit(true)
         .zoom(false)
-        // .attr("font-family", function(d,i) {return i<5 ? "Arvo" : "Sancreek"; })
-      // console.log(d3.select("#graph").attr("viewbox"));
-      // .attr("width", 960)
-      //   .attr("height", 500)
-      //   .attr('viewbox', `0 0 300 600`)
-      //   .call(responsivefy)
-      console.log(this.g)
+      // console.log(this.g)
+      // this.g.transition.duration = '1000'
+      // console.log(this.g.transition.duration)
+        // .on('renderEnd', console.log('a'))
+        // .on('renderEnd', this.draw('digraph {a -> b}'))
     },
-
     draw(dot) {
-      this.g.transition(this.transitionFactory).renderDot(dot).on('renderEnd', this.interactive)
+      this.g.renderDot(dot)
+      // const t = d3.transition('main').duration(750)
+      // console.log(t)
+      // this.g.transition(d3.transition()).renderDot(dot)
+      this.g.transition(this.transitionFactory)
+      // console.log(this.g)
+      // this.g.renderDot(dot).on('renderEnd', this.interactive)
+      // console.log(this.g)
+      // this.g.transition(this.transitionFactory).renderDot(dot) // .on('renderEnd', this.interactive)
     },
 
     interactive() {
-      this.nodes = d3.selectAll('.node')
-      // console.log(this.nodes)
+      const nodes = d3.selectAll('.node') // ; console.log(this.nodes)
 
-      // to make sure it works as toggle not infinitely-repeating increment,
-      // let's create a custom attribute storing original rx and ry.
-      this.nodes
+      // hover event
+      nodes
         .on('mouseover', function() {
-          // attempt to select the path (to access geometry variables)
           const node = d3.select(this)
           const path = d3.select(this).selectChild('path')
 
           // if baseRx doesn't exist, create it.
-          if (node.attr('baseRx') == null)
-            node.attr('baseRx', path.attr('rx'))
-            // console.log('baseRx set!')
+          if (node.attr('baseRx') == null) node.attr('baseRx', path.attr('rx'))// ; console.log('baseRx set!')
 
-          // set rx to 1.2*bRx.
-          const baseRx = node.attr('baseRx')
-          // console.log(baseRx)
+          // set rx to 1.2*baseRx
           path
             .transition()
             .duration('200')
-            .attr('rx', baseRx * 1.2)
+            .attr('rx', node.attr('baseRx') * 1.2)
 
-          // // opacity
+          // // set opacity to 0.5
           // node.transition()
           //   .duration('300')
           //   .attr('opacity', 0.5)
@@ -108,53 +104,37 @@ export default {
           const node = d3.select(this)
           const path = d3.select(this).selectChild('path')
 
-          // set rx to bRx.
-          const baseRx = node.attr('baseRx')
-          path.transition().duration('200').attr('rx', baseRx)
+          // revert rx
+          path.transition().duration('200').attr('rx', node.attr('baseRx'))
 
+          // revert opacity
           // node.transition()
           //   .duration('300')
           //   .attr('opacity', '1.0')
         })
-      this.nodes.on('click', function() {
-        // create a 'clicked' attribute
+
+      // click event
+      nodes.on('click', function() {
         const node = d3.select(this)
         const path = d3.select(this).selectChild('path')
         const courseName = this.textContent.split('\n')[1]
+
+        // manipulate localStorage
         const courses = JSON.parse(localStorage.getItem('courses'))
-
         const done = courses[courseName].done
-        if (done)
-          courses[courseName].done = false
-
-        else
-          courses[courseName].done = true
-
+        if (done) courses[courseName].done = false
+        else courses[courseName].done = true
         localStorage.setItem('courses', JSON.stringify(courses))
 
-        if (path.attr('baseColor') == null)
-          path.attr('baseColor', path.attr('fill'))
+        // set baseColor
+        if (path.attr('baseColor') == null) path.attr('baseColor', path.attr('fill'))
 
-        if (node.attr('clicked') == null || node.attr('clicked') == 'false')
-          node.attr('clicked', true)
+        // toggle 'clicked'
+        if (node.attr('clicked') === 'true') node.attr('clicked', 'false')
+        else node.attr('clicked', 'true')
 
-        else
-          node.attr('clicked', false)
-
-        if (node.attr('clicked') == 'true') {
-          path.transition().duration('200').attr('fill', '#0d8201')
-        }
-        else {
-          path
-            .transition()
-            .duration('200')
-            .attr('fill', path.attr('baseColor'))
-        }
-
-        // d3.select(this)
-        //   .transition()
-        //   .duration("300")
-        //   .attr("style", "font-weight: bold");
+        if (node.attr('clicked') === 'true') path.transition().duration('200').attr('fill', '#0d8201')
+        else path.transition().duration('200').attr('fill', path.attr('baseColor'))
       })
     },
   },

@@ -2,6 +2,7 @@ digraph Curriculum {
 	node [color=black colorscheme=spectral11 fontsize=12 penwidth=1.5 shape=box style="rounded, filled, radial"]
 	edge [arrowsize=0.65 colorscheme=spectral11 penwidth=3]
 	rankdir=LR
+	bgcolor=transparent
 	"PHYS 2212" [fillcolor=6]
 	"MSE 2001" [fillcolor=4]
 	"COE 2001" [fillcolor=6]

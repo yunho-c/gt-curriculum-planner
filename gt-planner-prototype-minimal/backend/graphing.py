@@ -116,7 +116,7 @@ def draw(curriculum, theme):
     c.node_attr['color'] = 'black'
     c.node_attr['penwidth'] = '0.5'
     # font
-    c.node_attr['fontname'] = 'Roboto Serif'
+    # c.node_attr['fontname'] = 'Roboto Serif'
     c.node_attr['fontsize'] = '10'
     # theme attributes
     if theme.node_attributes: 
