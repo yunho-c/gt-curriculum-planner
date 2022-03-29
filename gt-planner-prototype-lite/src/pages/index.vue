@@ -12,7 +12,7 @@
       <button class="m-3 text-sm btn" @click="start">Start</button>
     </div>
   </div>
-  <div absolute bottom-5 right-0 left-0 text-center op30 fw300>
+  <div absolute bottom-5 right-0 left-0 text-center text-xl op30 fw300>
     about · feedback
   </div>
 </template>
