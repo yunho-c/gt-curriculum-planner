@@ -8,8 +8,11 @@
       Better curriculum planning.
     </div>
     <div ma style="width: 50%">
-      <v-select id="b" class="m-3 text-lg" background-color="white" :options="majors" v-model="selected_major" placeholder="Major" />
-      <button class="m-3 text-sm btn" @click="start">Start</button>
+      <v-select id="b" v-model="selected_major" class="m-3 text-lg" background-color="white" :options="majors" placeholder="Major" />
+      <v-select v-if="selected_major" id="c" v-model="selected_thread" class="m-3 text-lg" background-color="white" :options="selected_major.threads" placeholder="Threads" />
+      <button class="m-3 text-sm btn" @click="start">
+        Start
+      </button>
     </div>
   </div>
   <div absolute bottom-5 right-0 left-0 text-center text-xl op30 fw300>
@@ -33,18 +36,82 @@ export default {
     return {
       curr: null,
       selected_major: null,
+      selected_thread: null,
       majors: [
         {
           id: 0,
-          label: 'ME',
+          label: 'CS',
+          threaded: true,
+          multithreaded: true,
+          threads: [
+            'Devices',
+            'Information Internetworks',
+            'Intelligence',
+            'Media',
+            'Modeling',
+            'People',
+            'Systems and Architecture',
+            'Theory',
+          ],
         },
         {
           id: 1,
-          label: 'BME',
+          label: 'ME',
+          threaded: true,
+          threads: [
+            'None',
+            'Automation and Robotics',
+            'Automative Engineering',
+            'Design',
+            'Manufacturing',
+            'Mechanics of Materials',
+            'Micro- and Nano- Engineering',
+            'Nuclear Energy',
+            'Thermal, Fluid, and Energy Systems',
+          ],
         },
         {
           id: 2,
-          label: 'CS',
+          label: 'Business',
+          threaded: true,
+          threads: [
+            'TODO',
+          ],
+        },
+        {
+          id: 3,
+          label: 'ISyE',
+          threaded: true,
+          threads: [
+            'TODO',
+          ],
+        },
+        {
+          id: 4,
+          label: 'BME',
+          threaded: true,
+          multithreaded: false,
+          threads: [
+            'TODO',
+          ],
+        },
+        {
+          id: 5,
+          label: 'EE',
+          threaded: true,
+          multithreaded: false,
+          threads: [
+            'TODO',
+          ],
+        },
+        {
+          id: 6,
+          label: 'CE',
+          threaded: true,
+          multithreaded: false,
+          threads: [
+            'TODO',
+          ],
         },
       ],
     }
@@ -60,13 +127,13 @@ export default {
     fetch_curr() {
       console.log(this.selected_major)
 
-      this.axios.get('http://localhost:8000/curr/'+this.selected_major.label).then((response) => {
+      this.axios.get(`http://localhost:8000/curr/${this.selected_major.label}`).then((response) => {
         this.curr = response.data
-        localStorage.setItem("courses", JSON.stringify(this.curr))
-      });
+        localStorage.setItem('courses', JSON.stringify(this.curr))
+      })
     },
     load_curr() {
-      const courses = JSON.parse(localStorage.getItem("courses"))
+      const courses = JSON.parse(localStorage.getItem('courses'))
       if (courses != null) this.curr = courses
     },
   },
@@ -82,7 +149,9 @@ div {
   position: relative;
   z-index: 2;
 }
-#b {
+#b,
+#c
+{
   --vs-controls-color: #c39d4c;
   --vs-border-color: #c39d4c;
 
