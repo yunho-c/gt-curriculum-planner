@@ -19,7 +19,7 @@ import * as d3Graphviz from 'd3-graphviz'
 
 // load webassembly
 const wasm = document.createElement('script')
-wasm.setAttribute('src', 'https://unpkg.com/@hpcc-js/wasm/dist/index.min.js')
+wasm.setAttribute('src', 'https://unpkg.com/@hpcc-js/wasm@1.13.0/dist/index.min.js')
 wasm.setAttribute('type', 'application/javascript') // it works but I don't know why..
 document.head.appendChild(wasm)
 
