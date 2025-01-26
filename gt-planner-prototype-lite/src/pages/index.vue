@@ -1,10 +1,10 @@
 <template>
   <bg />
   <div id="a">
-    <div text-9xl fw400>
+    <div text-9xl fw400 op90>
       GT Planner
     </div>
-    <div op50 text-lg fw400 m1 hover="op80" transition="200">
+    <div op70 text-lg fw400 m1 hover="op80" transition="200">
       Better curriculum planning.
     </div>
     <div ma style="width: 50%">
@@ -15,8 +15,9 @@
       </button>
     </div>
   </div>
-  <div absolute bottom-5 right-0 left-0 text-center text-xl op30 fw300>
-    about · feedback
+  <div absolute bottom-5 right-0 left-0 text-center text-xl op70 fw300>
+    <!-- about · feedback -->
+    <a href="/about">about</a> · <a href="mailto:yunhoyunho@gatech.edu">feedback</a>
   </div>
 </template>
 
