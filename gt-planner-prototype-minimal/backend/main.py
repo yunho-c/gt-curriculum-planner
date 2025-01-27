@@ -1,16 +1,15 @@
-from typing import Optional
-
+import uvicorn
 from fastapi import FastAPI
 from pydantic import BaseModel
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi import Request
+from typing import Optional
 
 app = FastAPI()
 
 from data import default_curriculums
 from fastapi.responses import JSONResponse
 from graphing import get_dot_source
-
 
 
 class Item(BaseModel):
@@ -31,6 +30,13 @@ d2 = f2.read()
 d3 = f3.read()
 d4 = f4.read()
 dots = [d1, d2, d3, d4]
+
+# not sure if these will ever get called
+f1.close()
+f2.close()
+f3.close()
+f4.close()
+
 
 # origins = ['http://localhost:*'] # dev
 origins = ['https://gt-planner.com'] # prod
@@ -70,8 +76,3 @@ def update_item(item_id: int, item: Item):
     return {"item_name": item.name, "item_id": item_id}
 
 
-# not sure if these will ever get called
-f1.close()
-f2.close()
-f3.close()
-f4.close()
