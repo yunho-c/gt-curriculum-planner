@@ -17,7 +17,7 @@
   </div>
   <div absolute bottom-5 right-0 left-0 text-center text-xl op70 fw300>
     <!-- about · feedback -->
-    <a href="/about">about</a> · <a href="mailto:yunhoyunho@gatech.edu">feedback</a>
+    <a href="/about">about</a> · <a href="mailto:yunhoyunho@gatech.edu">feedback</a> <span text-xs op70>built by <a href="https://yunho-cho.com/">Yunho Cho</a> and <a href="https://www.linkedin.com/in/won-yang">Won Yang</a></span>
   </div>
 </template>
 
