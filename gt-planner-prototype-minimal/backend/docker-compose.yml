@@ -1,0 +1,8 @@
+services:
+  main:
+    build: .
+    ports:
+      - "2021:443"
+    volumes:
+      - .:/app
+    command: python main.py
