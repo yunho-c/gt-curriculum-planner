@@ -128,7 +128,7 @@ export default {
     fetch_curr() {
       console.log(this.selected_major)
 
-      this.axios.get(`http://localhost:8000/curr/${this.selected_major.label}`).then((response) => {
+      this.axios.get(`https://backend.gt-planner.com/curr/${this.selected_major.label}`).then((response) => {
         this.curr = response.data
         localStorage.setItem('courses', JSON.stringify(this.curr))
       })

@@ -71,22 +71,22 @@ export default {
       this.$refs.gd.draw(dot)
     },
     draw_graph(curr) {
-      this.axios.post('http://localhost:8000/graph', { curr }).then((response) => {
+      this.axios.post('https://backend.gt-planner.com/graph', { curr }).then((response) => {
         this.$refs.gd.draw(response.data)
         return response.data
       })
     },
     fetch_example_graphs() {
-      this.axios.get('http://localhost:8000/example_graph/0').then((response) => {
+      this.axios.get('https://backend.gt-planner.com/example_graph/0').then((response) => {
         this.ex_graph1 = response.data.item_id
       })
-      this.axios.get('http://localhost:8000/example_graph/1').then((response) => {
+      this.axios.get('https://backend.gt-planner.com/example_graph/1').then((response) => {
         this.ex_graph2 = response.data.item_id
       })
-      this.axios.get('http://localhost:8000/example_graph/2').then((response) => {
+      this.axios.get('https://backend.gt-planner.com/example_graph/2').then((response) => {
         this.ex_graph3 = response.data.item_id
       })
-      this.axios.get('http://localhost:8000/example_graph/3').then((response) => {
+      this.axios.get('https://backend.gt-planner.com/example_graph/3').then((response) => {
         this.ex_graph4 = response.data.item_id
       })
     },
