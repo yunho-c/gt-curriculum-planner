@@ -38,6 +38,12 @@
       >
         2
       </button>
+      <button
+        class="m-3 text-sm btn"
+        @click="draw_dot(ex_graph3)"
+      >
+        3
+      </button>
     </div>
   </div>
 </template>

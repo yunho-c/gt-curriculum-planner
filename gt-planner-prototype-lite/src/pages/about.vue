@@ -33,7 +33,7 @@
     Plus, <a href="https://www.secondrightanswer.com/home/2021/5/8/you-only-college-once-by-makayla-sheehan">YOCO</a> (<a href="https://quchronicle.com/30573/opinion/yoco-you-only-college-once/">You Only College Once</a>). What if that one elective that is only available in <a href="https://europe.gatech.edu/en"><span style="color: #c39d4c">GT-Lorraine</span></a> ends up unveiling a life-changing passion of yours?
   </p>
   <h1 text-9xl fw400 op90>
-    <s>Planned</s> Features
+    <s>Planned Features</s>
   </h1>
   <p />
   <ul>
