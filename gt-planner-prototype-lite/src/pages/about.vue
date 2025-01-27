@@ -25,6 +25,7 @@
       <li>• balancing the load across semesters,</li>
       <li>• course availability constraints in study-abroads,</li>
       <li>• taking classes together with your friends,</li>
+      <li>• add light mode,</li>
       <li>... and possibly much more.</li>
     </ul>
     <br>
